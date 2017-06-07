@@ -1,2 +1,3 @@
-# LiU-average-grade
-Calculate your average grade in studentportalen.
+# LiU-Booking
+
+Handle the booking in TimeEdit.
