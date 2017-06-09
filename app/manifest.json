@@ -1,0 +1,44 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "32": "images/icon.png"
+  },
+  "default_locale": "en",
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html",
+    "default_title": "LiU Booking"
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "notifications",
+    "alarms"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://se.timeedit.net/web/liu/db1/wr_stud/ri1Q8.html"
+      ],
+      "css": [
+        "bower_components/angular/angular-csp.css"
+      ],
+      "js": [
+        "bower_components/jquery/dist/jquery.js",
+        "bower_components/angular/angular.min.js",
+        "scripts.babel/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "scripts": ["scripts.babel/background.js"],
+    "persistent": true
+ },
+  "content_security_policy": "script-src 'self' https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js; object-src 'self'"
+}
