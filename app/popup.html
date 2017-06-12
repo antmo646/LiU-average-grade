@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="bower_components\jquery-ui\themes\pepper-grinder\jquery-ui.css">
   <link rel="stylesheet" href="bower_components\jquery-ui-multidatespicker\jquery-ui.multidatespicker.css">
   <script src="scripts.babel/background.js"></script>
+  <script src="bower_components/crypto-js/crypto-js.js"></script>
+
+  <script src="scripts.babel\encryption.js"></script>
   <script src="popup.js"></script>
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.js"></script>
@@ -13,6 +16,7 @@
 </head>
 <body>
 <div class="container main-div">
+  <div id="upcomingBookings" style="background-color: rgba(59,170,227,0.45)"></div>
   <h3>Authentication</h3>
   <form>
     LiU-ID:<br>
@@ -30,9 +34,9 @@
     Select a time:
     <br>
     From:
-    <input type="time" id="fromTime">
+    <input type="time" id="fromTime" value="10:00">
     To:
-    <input type="time" id="toTime">
+    <input type="time" id="toTime" value="14:00">
     <br>
   </form>
   <br>
@@ -41,5 +45,7 @@
   <button type="button" id="setBookingBtn">Make Booking</button>
   <button type="button" id="getBtn">GET</button>
 </div>
+<br>
+
 </body>
 </html>

@@ -55,7 +55,6 @@ window.addEventListener("load", function() {
             "referer": "https://se.timeedit.net/web/liu/db1/wr_stud/ri1Q8.html",
             "accept-encoding": "gzip, deflate, br",
             "accept-language": "sv-SE,sv;q=0.8,en-US;q=0.6,en;q=0.4",
-            "cookie": "sso-parameters=ssoserver=liu_stud_cas&entry=wr_stud&back=https%3A%2F%2Fse.timeedit.net%2Fweb%2Fliu%2Fdb1%2Fwr_stud%2Fri1Q8.html&ssoserver=liu_stud_cas&entry=wr_stud; TEwebliudb1=7c8a279833ef413b82a754cdebf3ca18-2289397227167266476",
             "x-cookiesok": "I explicitly accept all cookies",
             "cache-control": "no-cache",
             "postman-token": "fea7eac1-2195-4a4f-7e08-6e84dc57e99e"

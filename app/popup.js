@@ -1,40 +1,72 @@
 document.addEventListener('DOMContentLoaded', function () {
-  //var bookingBtn = $("#setBookingBtn");
-  var bookingBtn = document.getElementById("setBookingBtn");
-  bookingBtn.addEventListener('click', bookingBtnOnClick);
+
+  chrome.storage.sync.get('savedData', function(data) {
+    if (data.savedData) {
+      $("#upcomingBookings").append("<p style='color: green'>Upcoming bookings:</p>" +
+        "<p>" + data.savedData.room + "</p>" +
+        "<p>" + data.savedData.fromTime + " - " + data.savedData.toTime + "</p>" +
+        "<p>" + data.savedData.date + "</p>");
+    };
+
+  });
+  var bookingBtn = $("#setBookingBtn");
+
+  bookingBtn.on('click', bookingBtnOnClick);
+  var TodaysDate = new Date();
   $('#datePicker').multiDatesPicker({
-    dateFormat: "yy-m-d"
+    dateFormat: "yy-m-d",
+    minDate: TodaysDate
   });
 
   $("#getBtn").on('click', function() {
-    chrome.storage.sync.get('liuid', function(data) {
-      alert(data.liuid);
+/*    chrome.storage.sync.get("savedData", function(data) {
+      alert(data.savedData.password);
+    });*/
+final();
+  });
+
+  chrome.storage.onChanged.addListener(function() {
+
+    $("#upcomingBookings").empty();
+    chrome.storage.sync.get('savedData', function(data) {
+      console.log(data)
+      if (data.savedData) {
+        console.log(data.savedData.date)
+        $("#upcomingBookings").append("<p style='color: green'>Upcoming bookings:</p>" +
+          "<p>" + data.savedData.room + "</p>" +
+          "<p>" + data.savedData.fromTime + " - " + data.savedData.toTime + "</p>" +
+          "<p>" + data.savedData.date + "</p>");
+      } else {
+        $("#upcomingBookings").empty();
+      }
     });
   });
 });
 
 function bookingBtnOnClick() {
   var liuid = $("#liuId").val();
-  var password = $("#psw").val();
+  var password = encrypt($("#psw").val(), "dP32Ckcqow7e3Kkd");
   var room = $("#roonName").val();
   var dates = $('#datePicker').multiDatesPicker('getDates');
   var fromTime = $("#fromTime").val();
   var toTime = $("#toTime").val();
-  console.log(dates);
   if (!liuid || !password || !room || !fromTime || !toTime) {
     alert("Please fill the required fields.");
     return;
   }
-  chrome.storage.sync.set({
+  var savedData = {
     "liuid": liuid,
     "password": password,
     "room": room,
-    "date": dates[0],
+    "date": dates,
     "fromTime": fromTime,
     "toTime": toTime
-  }, function() {
+  };
+  //chrome.storage.sync.clear();
+  chrome.storage.sync.set({"savedData": savedData}, function() {
     alert("information stored");
   });
   cdBooking();
 }
+
 
