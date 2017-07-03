@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
       $("#upcomingBookings").append("<p style='color: green'>Upcoming bookings:</p>" +
         "<p>" + data.savedData.room + "</p>" +
         "<p>" + data.savedData.fromTime + " - " + data.savedData.toTime + "</p>" +
-        "<p>" + data.savedData.date + "</p>");
+        "<p>" + data.savedData.date + "</p>" +
+        "<button type='button' id='getBtn'>Delete All Upcoming Booking</button>");
+
+      $("#getBtn").on('click', function() {
+        chrome.storage.sync.clear(function(data) {
+          alert("All stored data has been cleared.");
+        });
+      });
     };
 
   });
@@ -14,30 +21,29 @@ document.addEventListener('DOMContentLoaded', function () {
   bookingBtn.on('click', bookingBtnOnClick);
   var TodaysDate = new Date();
   $('#datePicker').multiDatesPicker({
-    dateFormat: "yy-m-d",
+    dateFormat: "yy-mm-dd",
     minDate: TodaysDate
   });
 
-  $("#getBtn").on('click', function() {
-/*    chrome.storage.sync.get("savedData", function(data) {
-      alert(data.savedData.password);
-    });*/
-final();
-  });
 
   chrome.storage.onChanged.addListener(function() {
 
     $("#upcomingBookings").empty();
     chrome.storage.sync.get('savedData', function(data) {
-      console.log(data)
       if (data.savedData) {
-        console.log(data.savedData.date)
         $("#upcomingBookings").append("<p style='color: green'>Upcoming bookings:</p>" +
           "<p>" + data.savedData.room + "</p>" +
           "<p>" + data.savedData.fromTime + " - " + data.savedData.toTime + "</p>" +
-          "<p>" + data.savedData.date + "</p>");
+          "<p>" + data.savedData.date + "</p>" +
+          "<button type='button' id='getBtn'>Delete All Upcoming Booking</button>");
+        $("#getBtn").on('click', function() {
+          chrome.storage.sync.clear(function(data) {
+            alert("All stored data has been cleared.");
+          });
+        });
       } else {
         $("#upcomingBookings").empty();
+
       }
     });
   });
@@ -62,11 +68,10 @@ function bookingBtnOnClick() {
     "fromTime": fromTime,
     "toTime": toTime
   };
-  //chrome.storage.sync.clear();
   chrome.storage.sync.set({"savedData": savedData}, function() {
     alert("information stored");
   });
-  cdBooking();
+  cdBooking(savedData.date[0]);
 }
 
 
